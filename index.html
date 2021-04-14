@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen">
+    <title>Text Editor</title>
+    <script src="https://kit.fontawesome.com/bf6431bbcf.js" crossorigin="anonymous"></script>
+</head>
+<body onload="enableEditMode();">
+
+    <div class="tools">
+        <button class="btn" onclick="execCmd('bold');"><i class="fas fa-bold"></i></button>
+        <button class="btn" onclick="execCmd('italic');"><i class="fas fa-italic"></i></button>
+        <button class="btn" onclick="execCmd('underline');"><i class="fas fa-underline"></i></button>
+        <button class="btn" onclick="execCmd('strikeThrough');"><i class="fas fa-strikethrough"></i></button>
+        <button class="btn" onclick="execCmd('justifyLeft');"><i class="fas fa-align-left"></i></button>
+        <button class="btn" onclick="execCmd('justifyCenter');"><i class="fas fa-align-center"></i></button>
+        <button class="btn" onclick="execCmd('justifyRight');"><i class="fas fa-align-right"></i></button>
+        <button class="btn" onclick="execCmd('justifyFull');"><i class="fas fa-align-justify"></i></button>
+        <button class="btn" onclick="execCmd('cut');"><i class="fas fa-cut"></i></button>
+        <button class="btn" onclick="execCmd('copy');"><i class="fas fa-copy"></i></button>
+        <button class="btn" onclick="execCmd('indent');"><i class="fas fa-indent"></i></button>
+        <button class="btn" onclick="execCmd('outdent');"><i class="fas fa-outdent"></i></button>
+        <button class="btn" onclick="execCmd('subscripit');"><i class="fas fa-subscript"></i></button>
+        <button class="btn" onclick="execCmd('superscript');"><i class="fas fa-superscript"></i></button>
+        <button class="btn" onclick="execCmd('undo');"><i class="fas fa-undo"></i></button>
+        <button class="btn" onclick="execCmd('redo');"><i class="fas fa-redo"></i></button>
+        <button class="btn" onclick="execCmd('insertUnorderedList');"><i class="fas fa-list-ul"></i></button>
+        <button class="btn" onclick="execCmd('insertOrderedList');"><i class="fas fa-list-ol"></i></button>
+        <button class="btn" onclick="execCmd('insertParagraph');"><i class="fas fa-paragraph"></i></button>
+        <select class="selector" onchange="execCommanWithArg('formatBlock', this.value);">
+            <option value="H1">H1</option>
+            <option value="H2">H2</option>
+            <option value="H3">H3</option>
+            <option value="H4">H4</option>
+            <option value="H5">H5</option>
+            <option value="H6">H6</option>
+        </select>
+        <button class="btn" onclick="execCmd('insertHorizontalRule');">HR</button>
+        <button class="btn" onclick="execCommanWithArg('createLink', prompt('Enter a URL', 'http://'));"><i class="fas fa-link"></i></button>
+        <button class="btn" onclick="execCmd('unlink');"><i class="fas fa-unlink"></i></button>
+        <button class="btn" onclick="toggleSource();"><i class="fas fa-code"></i></button>
+        <button class="btn" onclick="toggleEdit();">Toggle Edit</button>
+    </div>
+    <div class="tools">
+        <select class="selector" onchange="execCommanWithArg('fontName', this.value);">
+            <option value="Arial">Arial</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Courier">Courier</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Verdana">Verdana</option>
+        </select>
+        <select class="selector" onchange="execCommanWithArg('fontSize', this.value);">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+        Fore Color: <input class="colorSelector" type="color" onchange="execCommanWithArg('foreColor', this.value);" />
+        Background: <input class="colorSelector" type="color" onchange="execCommanWithArg('hiliteColor', this.value);"/>
+        <button class="btn" onclick="execCommanWithArg('insertImage', prompt('Enter the image URL', ''));"><i class="fas fa-file-image"></i></button>
+        <button class="btn" onclick="execCmd('selectAll');">Select All</button>
+    </div>
+
+    <div class="txtField">
+        <iframe class= "pagina" name="richTextField" id="pagina"></iframe>
+    </div>
+
+    <script type="text/javascript">
+
+        var showingSourceCode = false;
+        var isInEditMode = true;
+
+        function enableEditMode(){
+            richTextField.document.designMode = 'On';
+        }
+
+        function execCmd(command){
+            richTextField.document.execCommand(command, false, null);
+        }
+
+        function execCommanWithArg(command, arg){
+            richTextField.document.execCommand(command, false, arg);
+        }
+
+        function toggleSource(){
+            if(showingSourceCode){
+                richTextField.document.getElementsByTagName('body')[0].innerHTML = richTextField.document.getElementsByTagName('body')[0].textContent;
+                showingSourceCode = false;
+            }else{
+                richTextField.document.getElementsByTagName('body')[0].innerHTML = richTextField.document.getElementsByTagName('body')[0].innerHTML;
+                showingSourceCode = true;
+            }
+        }
+
+        function toggleEdit(){
+            if(isInEditMode){
+                richTextField.document,designMode = 'Off';
+                isInEditMode = false;
+            }else{
+                richTextField.document,designMode = 'On';
+                isInEditMode = true;
+            }
+        }
+
+    </script>
+    
+</body>
+</html>
